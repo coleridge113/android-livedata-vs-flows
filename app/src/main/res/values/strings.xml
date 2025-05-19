@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Flows</string>
+    <string name="textview">TextView</string>
+    <string name="add">ADD</string>
+    <string name="enter_name">Enter name...</string>
+    <string name="delete">DELETE</string>
+</resources>
