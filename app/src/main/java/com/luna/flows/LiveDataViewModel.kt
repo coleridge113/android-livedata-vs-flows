@@ -12,11 +12,13 @@ class LiveDataViewModel(): ViewModel() {
     val namesList: LiveData<List<String>> = _namesList
 
     fun addName(name: String){
-        _namesList.value = namesList.value?.plus(name)
+        _namesList.value = _namesList.value?.plus(name)
+        logChanges()
     }
 
     fun deleteName(){
-        _namesList.value = namesList.value?.dropLast(1)
+        _namesList.value = _namesList.value?.dropLast(1)
+        logChanges()
     }
 
     fun logChanges(){

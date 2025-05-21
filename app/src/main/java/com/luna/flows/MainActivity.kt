@@ -3,7 +3,6 @@ package com.luna.flows
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.State
 import androidx.lifecycle.lifecycleScope
 import com.luna.flows.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
@@ -14,6 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     private val stateViewModel: StateViewModel by viewModels<StateViewModel>()
     private val liveDataViewModel: LiveDataViewModel by viewModels<LiveDataViewModel>()
+    private val sharedFlowViewModel: SharedFlowViewModel by viewModels<SharedFlowViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +22,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 //        useStateData()
-        useLiveData()
+        useSharedFlowData()
+//        useLiveData()
 
 
     }
@@ -59,6 +60,25 @@ class MainActivity : AppCompatActivity() {
 
             deleteName.setOnClickListener {
                 liveDataViewModel.deleteName()
+            }
+        }
+    }
+
+    fun useSharedFlowData(){
+        lifecycleScope.launch {
+            sharedFlowViewModel.namesList.collect { namesList ->
+                binding.names.text = namesList.joinToString("\n")
+            }
+        }
+
+        with(binding){
+            addName.setOnClickListener {
+                sharedFlowViewModel.addName(editText.text.toString())
+                editText.text.clear()
+            }
+
+            deleteName.setOnClickListener {
+                sharedFlowViewModel.deleteName()
             }
         }
     }
